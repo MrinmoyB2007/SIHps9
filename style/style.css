@@ -1,0 +1,421 @@
+.game-name{
+    font-family: "Kode Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+}
+
+
+.navbar > .container-fluid{
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: linear-gradient(90deg, #2c6e49, #4ca16c, #2c6e49);
+  padding: 1rem 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #e1f0d1;
+  box-shadow: 0 4px 15px rgba(44, 110, 73, 0.4);
+  animation: bgGradient 12s ease-in-out infinite alternate;
+  border-radius: 12px;
+  transition: box-shadow 0.3s ease;
+
+}
+
+/* Animated background gradient */
+@keyframes bgGradient {
+  0% {
+    background: linear-gradient(90deg, #2c6e49, #4ca16c, #2c6e49);
+  }
+  50% {
+    background: linear-gradient(90deg, #4ca16c, #7ad28e, #4ca16c);
+  }
+  100% {
+    background: linear-gradient(90deg, #2c6e49, #4ca16c, #2c6e49);
+  }
+}
+
+.navbar{
+    padding: 0px;
+}
+
+body{
+    background-color: rgb(184, 240, 187);
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.py-5 {
+    padding-top: 0px
+}
+
+ @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+
+    /* Apply the animation to the element */
+.tree {  
+    height: 500px;
+    width: 500px;
+    cursor: pointer;
+    animation: shake 0.5 ease;
+    animation-duration: 2s;
+    animation-delay: 3s;
+    animation-iteration-count: infinite; /* Optional: Infinite loop */
+
+}
+@media (min-width: 300px) and (max-width: 480px){
+
+      .tree{
+        height: 300px;
+        width: 300px;
+        cursor: pointer;
+        animation: shake 0.5 ease;
+        animation-duration: 2s;
+        animation-delay: 3s;
+        animation-iteration-count: infinite; /* Optional: Infinite loop */
+        }
+}
+.superhero{
+    width: 70px;
+    height: 75px;
+    animation-name: hero;
+    animation-duration: 5s;
+    animation-delay: 2s;
+    animation-iteration-count: infinite;
+}
+
+ @keyframes hero {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(235px);
+      }
+    }
+ .falling-image1 {
+      position: absolute;
+      top: -100px; /* Start above the viewport */
+      left: 50% ;
+      transform: translateX(-50%);
+      width: 50px;
+      opacity: 50%;
+      animation: fall1 5s linear infinite ;
+      animation-delay: 3s;
+    }
+ .falling-image2 {
+      position: absolute;
+      top: -100px; /* Start above the viewport */
+      left: 67% ;
+      transform: translateX(-50%);
+      width: 50px;
+      opacity: 50%;
+      animation: fall2 5s linear infinite ;
+      animation-delay: 5s;
+    }
+ .falling-image3 {
+      position: absolute;
+      top: -100px; /* Start above the viewport */
+      left: 77% ;
+      transform: translateX(-50%);
+      width: 50px;
+      opacity: 50%;
+      animation: fall3 5s linear infinite ;
+      animation-delay: 1s;
+    }
+ .falling-image4 {
+      position: absolute;
+      top: -100px; /* Start above the viewport */
+      left: 45% ;
+      transform: translateX(-50%);
+      width: 50px;
+      opacity: 50%;
+      animation: fall4 5s linear infinite ;
+      animation-delay: 10s;
+    }
+ .falling-image5 {
+      position: absolute;
+      top: -100px; /* Start above the viewport */
+      left: 60% ;
+      transform: translateX(-50%);
+      width: 50px;
+      opacity: 50%;
+      animation: fall5 5s linear infinite ;
+      animation-delay: 12s;
+    }
+ .falling-image6 {
+      position: absolute;
+      top: -100px; /* Start above the viewport */
+      left: 5% ;
+      transform: translateX(-50%);
+      width: 50px;
+      opacity: 50%;
+      animation: fall6 5s linear infinite ;
+      animation-delay: 15s;
+    }
+ .falling-image7 {
+      position: absolute;
+      top: -100px; /* Start above the viewport */
+      left: 10% ;
+      transform: translateX(-50%);
+      width: 50px;
+      opacity: 50%;
+      animation: fall7 5s linear infinite ;
+      animation-delay: 7s;
+    }
+
+@keyframes fall1 {
+    0% {
+    top: -100px; /* Start above the viewport */
+    }
+    100% {
+    top: 100vh; /* End below the viewport */
+    }
+}
+@keyframes fall2 {
+    0% {
+    top: -1730px; /* Start above the viewport */
+    }
+    100% {
+    top: 100vh; /* End below the viewport */
+    }
+}
+@keyframes fall3 {
+    0% {
+    top: -2440px; /* Start above the viewport */
+    }
+    100% {
+    top: 100vh; /* End below the viewport */
+    }
+}
+@keyframes fall4 {
+    0% {
+    top: -330px; /* Start above the viewport */
+    }
+    100% {
+    top: 100vh; /* End below the viewport */
+    }
+}
+@keyframes fall5 {
+    0% {
+    top: -760px; /* Start above the viewport */
+    }
+    100% {
+    top: 100vh; /* End below the viewport */
+    }
+}
+@keyframes fall6 {
+    0% {
+    top: -500px; /* Start above the viewport */
+    }
+    100% {
+    top: 100vh; /* End below the viewport */
+    }
+}
+@keyframes fall7 {
+    0% {
+    top: -1000px; /* Start above the viewport */
+    }
+    100% {
+    top: 100vh; /* End below the viewport */
+    }
+}
+
+.arrow {
+    width: 140px;
+    height: 170px;
+    position: absolute;
+    top: 180px;
+    animation: shoot forwards 2ms ease-in-out;
+    animation-duration: 1.7s;
+    animation-delay: 2s;
+    animation-iteration-count: infinite;
+}
+
+ @media (min-width: 319px) and (max-width: 480px){
+    @keyframes shoot {
+    0% {
+        transform: translateX(-200px);
+    }
+    100% {
+        transform: translateX(250px); /* Adjust distance as needed */
+    }
+}
+      }
+    @media (min-width: 481px) and (max-width: 1200px){
+      @keyframes shoot {
+    0% {
+        transform: translateX(-800px);
+    }
+    100% {
+        transform: translateX(660px); /* Adjust distance as needed */
+    }
+}
+      }
+    @media (min-width: 1201px) and (max-width: 1600px){
+     @keyframes shoot {
+    0% {
+        transform: translateX(-200px);
+    }
+    100% {
+        transform: translateX(1000px); /* Adjust distance as needed */
+    }
+}
+      }
+    @media (min-width: 1601px){
+    @keyframes shoot {
+    0% {
+        transform: translateX(-200px);
+    }
+    100% {
+        transform: translateX(2060px); /* Adjust distance as needed */
+    }
+}
+    }
+
+
+
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  background: linear-gradient(-45deg, #32de5a, #3da9e3, #71e3a1, #0ed657);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+.sign{
+  background: linear-gradient(45deg, #25e151, #f9d423); /* vibrant gradient */
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 15px 40px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(255, 78, 80, 0.6);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  user-select: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.sign-up-box{ 
+  width: 350px;
+  padding: 40px;
+  background: rgba(30, 80, 50, 0.9);
+  opacity: 99%;
+  border: 5px solid #8B4513; /* A wooden border effect */
+  border-radius: 12px;
+  box-shadow: 0 0 20px #228B22, 0 0 40px #228B22 inset; /* Glow effect */
+  color: #1c0909;
+  text-align: center;
+  animation: pulse 2s infinite ease-in-out; /* Subtle breathing animation */
+}
+
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.game-signup-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(212, 76, 79, 0.9), 0 0 10px 3px #f9d423;
+}
+
+.game-signup-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 3px 8px rgba(223, 66, 68, 0.8);
+}
+
+/* Optional: focus for accessibility */
+.game-signup-btn:focus {
+  outline: 2px solid #f9d423;
+  outline-offset: 4px;
+}
+
+
+.save{
+     font-family: "Libertinus Keyboard", system-ui;
+    font-weight: 700;
+    font-style: normal;
+    font-size: xx-large;
+    color: #074823;
+
+}
+
+body {
+  background-image: url("https://img.freepik.com/premium-vector/vector-illustration-game-background_303920-54.jpg?w=740");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+.sign-in{
+  background: #ecbf6c; /* A vibrant, fiery color */
+  border: 2px solid #8B4513;
+  border-radius: 5px;
+  padding: 15px 25px;
+  color: #c02929;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px #8B4513; /* 3D-like effect */
+}
+
+.footer-inc{
+  font-weight: 500;
+  color: #f8fefa;
+  
+}
+
+.lessons{
+  background-color :#a9d8be;
+  width: 400px;
+  height: 600px;
+  position: 300px;
+}
+
+.Climate_heroes{
+    width: 50px;
+    height: 50px;
+}
+
+.footer_write{
+  font-weight: 800;
+  color: #d9e8dfdc;
+}

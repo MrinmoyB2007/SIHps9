@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Inline:opsz,wght@10..72,100..900&family=Bonheur+Royale&family=Borel&family=Caveat:wght@400..700&family=Dancing+Script:wght@400..700&family=Delius+Swash+Caps&family=Libertinus+Keyboard&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Limelight&family=Pacifico&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sevillana&family=Shadows+Into+Light&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+     <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Inline:opsz,wght@10..72,100..900&family=Bonheur+Royale&family=Borel&family=Caveat:wght@400..700&family=Dancing+Script:wght@400..700&family=Delius+Swash+Caps&family=Libertinus+Keyboard&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Limelight&family=Pacifico&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sevillana&family=Shadows+Into+Light&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style/style.css">
+
+     <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(180deg, #2a9df4 0%, #76c5f8 50%, #a1dff5 100%);
+            overflow-x: hidden;
+        }
+
+        .sun {
+            width: 100px;
+            height: 100px;
+            background: #FFD700;
+            border-radius: 50%;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            box-shadow: 0 0 50px rgba(255, 223, 0, 0.9);
+            animation: spin 30s linear infinite;
+        }
+
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.9;
+            animation: drift 60s linear infinite alternate;
+        }
+
+        .cloud1 { top: 15%; left: 10%; width: 120px; height: 40px; }
+        .cloud2 { top: 25%; left: 80%; width: 150px; height: 50px; animation-duration: 70s; }
+        .cloud3 { top: 5%; left: 40%; width: 100px; height: 30px; animation-duration: 50s; }
+
+        .cloud:before, .cloud:after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+        .cloud:before { width: 60px; height: 60px; top: -30px; left: 20px; }
+        .cloud:after { width: 80px; height: 80px; top: -40px; right: 10px; }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes drift {
+            from { transform: translateX(-200px); }
+            to { transform: translateX(200px); }
+        }
+        
+        .game-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none; position: fixed; z-index: 50;
+            left: 0; top: 0; width: 100%; height: 100%;
+            overflow: auto; background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        .modal-content {
+            position: relative; margin: 8% auto;
+            border-radius: 1rem;
+            animation: slideIn 0.4s ease-in-out;
+        }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* Sorting Game Specific Styles */
+        .draggable { cursor: grab; user-select: none; }
+        .dragging { opacity: 0.5; transform: scale(1.1); }
+        .bin { border: 2px dashed #ccc; transition: all 0.3s; }
+        .bin.over { background-color: #e0ffe0; border-color: #28a745; transform: scale(1.05); }
+        
+        /* New Main Scene SVG Animations */
+        .earth-spin { animation: earthSpin 25s linear infinite; transform-origin: center; }
+        @keyframes earthSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
+        .kid-wave { animation: kidWave 2s ease-in-out infinite alternate; transform-origin: 80% 90%; }
+        @keyframes kidWave { from { transform: rotate(-10deg); } to { transform: rotate(10deg); } }
+
+        .plant-grow { animation: plantGrow 4s ease-in-out infinite; transform-origin: bottom; }
+        @keyframes plantGrow { 
+            0%, 100% { transform: scaleY(1); } 
+            50% { transform: scaleY(1.1); }
+        }
+        .shooting-star { position: absolute; height: 2px; background: linear-gradient(-45deg, rgba(255,255,255,1), rgba(255,255,255,0)); filter: drop-shadow(0 0 6px #fff); animation: tail 3s ease-in-out infinite, shooting 3s ease-in-out infinite; }
+        @keyframes tail { 0% { width: 0; } 30% { width: 100px; } 100% { width: 0; } }
+        @keyframes shooting { 0% { transform: translateX(0); } 100% { transform: translateX(300px); } }
+
+    </style>
+</head>
+
+
+
+<body >
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand game-name" href="#">Enviro saver</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Challenges</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Quizes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Lessons</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Fun-Games</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dashboard
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="#">Eco Points</a></li>
+            <li><a class="dropdown-item" href="#">Real World Task</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="text-gray-800">
+
+    <div class="shooting-star" style="top: 20%; left: -50px;"></div>
+    <div class="shooting-star" style="top: 40%; left: -50px; animation-delay: 1.2s;"></div>
+
+    <div class="sun"></div>
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+
+    <div class="relative min-h-screen p-4 sm:p-6 md:p-8 overflow-hidden">
+        <div class="container mx-auto relative z-10">
+
+            <header class="text-center mb-12">
+                <h1 class="text-5xl md:text-7xl font-black text-white text-shadow-lg" style="text-shadow: 3px 3px 0px rgba(0,0,0,0.2);">Climate Action Kids</h1>
+                <p class="text-lg md:text-xl text-white mt-4 font-semibold">Let's learn how to protect our beautiful Earth!</p>
+            </header>
+
+            <section class="bg-white/70 backdrop-blur-sm p-8 rounded-2xl shadow-xl mb-12 flex flex-col md:flex-row items-center gap-6">
+                <div class="w-full md:w-2/5">
+                     <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <radialGradient id="earthGradient" cx="0.3" cy="0.3" r="0.7">
+                                <stop offset="0%" stop-color="#80d4ff"/>
+                                <stop offset="100%" stop-color="#0077be"/>
+                            </radialGradient>
+                        </defs>
+                        <!-- Earth -->
+                        <g class="earth-spin">
+                            <circle cx="100" cy="100" r="70" fill="url(#earthGradient)"/>
+                            <path d="M 60,130 C 80,150 120,150 140,130 C 150,110 130,80 110,85 C 90,90 70,70 60,90 C 50,110 40,110 60,130 Z" fill="#22c55e" opacity="0.8"/>
+                            <path d="M 80,60 C 90,50 110,55 120,70" fill="#22c55e" opacity="0.8"/>
+                        </g>
+                        <!-- Happy Face -->
+                        <circle cx="88" cy="95" r="3" fill="white"/>
+                        <circle cx="112" cy="95" r="3" fill="white"/>
+                        <path d="M 90 108 A 12 12 0 0 1 110 108" stroke="white" stroke-width="2" fill="none"/>
+                        
+                        <!-- Tree planting kids -->
+                        <g transform="translate(0, 60)">
+                            <path d="M0 130 Q100 110, 200 130 L200 150 L0 150 Z" fill="#654321" opacity="0.6"/>
+                            <!-- Kid 1 -->
+                            <g transform="translate(50, 105)">
+                                <circle cx="0" cy="0" r="8" fill="#FFDAB9"/> <!-- head -->
+                                <path d="M -2 0 A 4 4 0 0 1 2 0" stroke="black" stroke-width="0.5" fill="none"/> <!-- smile -->
+                                <rect x="-7" y="5" width="14" height="20" rx="5" fill="#3B82F6"/> <!-- body -->
+                                <g class="kid-wave">
+                                    <rect x="7" y="8" width="10" height="4" rx="2" fill="#FFDAB9"/> <!-- arm -->
+                                </g>
+                            </g>
+                            <!-- Kid 2 -->
+                            <g transform="translate(150, 105)">
+                                <circle cx="0" cy="0" r="8" fill="#FDE68A"/>
+                                <path d="M -2 0 A 4 4 0 0 1 2 0" stroke="black" stroke-width="0.5" fill="none"/>
+                                <rect x="-7" y="5" width="14" height="20" rx="5" fill="#EC4899"/>
+                            </g>
+                            <!-- Plant -->
+                             <g transform="translate(100, 130)" class="plant-grow" style="transform-origin: bottom center;">
+                                <rect x="-2" y="-15" width="4" height="15" fill="#A0522D"/>
+                                <path d="M 0 -15 C -10 -25, 10 -25, 0 -15 Z" fill="#22C55E"/>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+                <div class="w-full md:w-3/5">
+                    <h2 class="text-3xl font-bold text-teal-700 mb-4">You Can Help Our Planet!</h2>
+                    <p class="text-lg leading-relaxed">Our Earth is a giant, beautiful home for everyone. Keeping it happy and healthy is a super important job! By playing games and learning, you become an Earth Hero. Simple things like turning off lights, recycling, and planting trees make a huge difference in fighting climate change and keeping our planet smiling.</p>
+                </div>
+            </section>
+            
+            <section class="text-center">
+                <h2 class="text-4xl font-bold text-white mb-8" style="text-shadow: 2px 2px 0px rgba(0,0,0,0.15);">Fun Learning Games</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div id="game-recycle" class="game-card bg-white p-6 rounded-2xl shadow-lg cursor-pointer">
+                        <div class="text-5xl mb-4">♻️</div>
+                        <h3 class="text-2xl font-bold text-green-600 mb-2">Recycle Rush</h3>
+                        <p>Can you sort the items into the correct bins? Let's clean up!</p>
+                    </div>
+                    <div id="game-energy" class="game-card bg-white p-6 rounded-2xl shadow-lg cursor-pointer">
+                        <div class="text-5xl mb-4">💡</div>
+                        <h3 class="text-2xl font-bold text-yellow-500 mb-2">Energy Saver Challenge</h3>
+                        <p>Click the "ON" lights before time runs out!</p>
+                    </div>
+                    <div id="game-tree" class="game-card bg-white p-6 rounded-2xl shadow-lg cursor-pointer">
+                        <div class="text-5xl mb-4">🌳</div>
+                        <h3 class="text-2xl font-bold text-lime-600 mb-2">Grow a Forest</h3>
+                        <p>Plant saplings and water them to grow a big forest!</p>
+                    </div>
+                    <div id="game-ocean" class="game-card bg-white p-6 rounded-2xl shadow-lg cursor-pointer">
+                        <div class="text-5xl mb-4">🐢</div>
+                        <h3 class="text-2xl font-bold text-blue-500 mb-2">Ocean Cleanup Crew</h3>
+                        <p>The ocean is full of trash! Click to clean it up and save the fish.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Game Modals -->
+    <div id="game-modal" class="modal">
+        <div class="modal-content bg-white w-11/12 md:w-3/4 lg:w-2/3 max-w-4xl p-6 shadow-2xl rounded-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="modal-title" class="text-3xl font-bold">Game Time!</h2>
+                <button id="close-modal" class="text-3xl font-bold text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <div id="modal-body" class="text-center">
+                <!-- Game content will be injected here -->
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        // --- This script section contains all game logic ---
+        const games = {
+            recycle: { /* Unchanged */ },
+            energy: { /* Unchanged */ },
+            tree: { /* Unchanged */ },
+            ocean: {
+                title: 'Ocean Cleanup Crew',
+                instructions: 'Help keep our oceans clean! Click on the trash to remove it, but be careful not to click the friendly sea creatures.',
+                content: `
+                    <div id="ocean-game-container" class="relative bg-gradient-to-b from-blue-400 to-blue-600 h-96 w-full max-w-3xl mx-auto rounded-lg overflow-hidden shadow-inner">
+                        <!-- Game elements will appear here -->
+                        <div class="absolute bottom-0 left-0 w-full h-12 bg-yellow-200 opacity-50" style="background-image: radial-gradient(#d2b48c 20%, transparent 20%), radial-gradient(#d2b48c 20%, transparent 20%); background-size: 30px 30px; background-position: 0 0, 15px 15px;"></div>
+                         <div id="ocean-feedback" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-3xl font-bold opacity-0 transition-opacity" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);"></div>
+                    </div>
+                    <div class="mt-4 text-xl">Trash Cleaned: <span id="ocean-score" class="font-bold">0</span></div>
+                `
+            }
+        };
+
+        const modal = document.getElementById('game-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+        const closeModalBtn = document.getElementById('close-modal');
+        let activeGameInterval;
+
+        document.getElementById('game-recycle').addEventListener('click', () => openModal('recycle'));
+        document.getElementById('game-energy').addEventListener('click', () => openModal('energy'));
+        document.getElementById('game-tree').addEventListener('click', () => openModal('tree'));
+        document.getElementById('game-ocean').addEventListener('click', () => openModal('ocean'));
+
+        function closeModal() {
+            modal.style.display = 'none';
+            if (activeGameInterval) {
+                clearInterval(activeGameInterval);
+            }
+        }
+        closeModalBtn.addEventListener('click', closeModal);
+        window.addEventListener('click', (event) => { if (event.target == modal) closeModal(); });
+
+        function openModal(gameId) {
+            // Restore hidden game content for brevity in the 'games' object
+            games.recycle.content = `<div class="flex flex-col lg:flex-row gap-8 items-center justify-around"><div id="items-container" class="grid grid-cols-3 gap-4 p-4 bg-gray-100 rounded-lg"><div class="draggable text-4xl p-2 bg-white rounded shadow-md" draggable="true" data-type="recycle">🍾</div><div class="draggable text-4xl p-2 bg-white rounded shadow-md" draggable="true" data-type="compost">🍎</div><div class="draggable text-4xl p-2 bg-white rounded shadow-md" draggable="true" data-type="trash">🍬</div><div class="draggable text-4xl p-2 bg-white rounded shadow-md" draggable="true" data-type="recycle">📰</div><div class="draggable text-4xl p-2 bg-white rounded shadow-md" draggable="true" data-type="trash">🛍️</div><div class="draggable text-4xl p-2 bg-white rounded shadow-md" draggable="true" data-type="compost">🍌</div></div><div class="flex flex-col gap-4 w-full lg:w-1/2"><div class="bin p-6 rounded-lg text-center" data-bin="recycle"><span class="text-3xl">♻️</span><br>Recycling</div><div class="bin p-6 rounded-lg text-center" data-bin="trash"><span class="text-3xl">🗑️</span><br>Trash</div><div class="bin p-6 rounded-lg text-center" data-bin="compost"><span class="text-3xl">🌿</span><br>Compost</div></div></div><p id="recycle-feedback" class="mt-4 h-6 text-lg font-semibold"></p>`;
+            games.energy.content = `<div id="energy-game-start-screen" class="text-center"><p class="mb-4 text-lg">Click the yellow "ON" lights to turn them "OFF". Turn off as many as you can in <strong>30 seconds!</strong></p><button id="start-energy-game-btn" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-lg text-xl transition-transform transform hover:scale-105">Start Challenge</button></div><div id="energy-game-play-screen" class="hidden"><div class="flex justify-between items-center mb-4 text-xl font-bold"><div>Score: <span id="energy-score">0</span></div><div>Time: <span id="energy-timer">30</span>s</div></div><div id="light-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-4 max-w-lg mx-auto bg-blue-900 p-4 rounded-lg" style="min-height: 250px;"></div></div><div id="energy-game-over-screen" class="hidden mt-4 text-center"><h3 class="text-3xl font-bold text-blue-800">Time's Up!</h3><p class="text-xl mt-2">Your final score is: <strong id="final-energy-score" class="text-2xl">0</strong></p><p class="mt-4 text-lg max-w-md mx-auto">Great job! Every light turned off helps save precious energy.</p><button id="restart-energy-game-btn" class="mt-6 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg text-xl">Play Again</button></div>`;
+            games.tree.content = `<div class="bg-sky-200 p-4 rounded-lg relative h-64 overflow-hidden"><div id="forest-floor" class="absolute bottom-0 left-0 w-full h-16 bg-green-700"></div><div id="tree-container" class="absolute bottom-16 left-0 w-full h-48"></div></div><button id="plant-tree-btn" class="mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg text-xl transition-transform transform hover:scale-105">Plant a Sapling 🌱</button><p class="mt-2 text-lg">Grown Trees: <span id="tree-count" class="font-bold">0</span></p>`;
+
+            const game = games[gameId];
+            modalTitle.textContent = game.title;
+            modalBody.innerHTML = `<p class="mb-4">${game.instructions}</p>${game.content}`;
+            modal.style.display = 'block';
+
+            if (gameId === 'recycle') initRecycleGame();
+            if (gameId === 'energy') initEnergyGame();
+            if (gameId === 'tree') initTreeGame();
+            if (gameId === 'ocean') initOceanCleanupGame();
+        }
+
+        function initRecycleGame() { /* Unchanged logic */ }
+        function initEnergyGame() { /* Unchanged logic */ }
+        function initTreeGame() { /* Unchanged logic */ }
+        
+        // --- Ocean Cleanup Crew Game Logic ---
+        function initOceanCleanupGame() {
+            const gameContainer = document.getElementById('ocean-game-container');
+            const scoreEl = document.getElementById('ocean-score');
+            const feedbackEl = document.getElementById('ocean-feedback');
+            let score = 0;
+            
+            const items = [
+                { type: 'trash', char: '🥤', points: 1 }, { type: 'trash', char: '🛍️', points: 1 },
+                { type: 'animal', char: '🐠', points: -1 }, { type: 'animal', char: '🐢', points: -1 },
+                { type: 'animal', char: '🐬', points: -1 }, { type: 'animal', char: '🦀', points: -1 }
+            ];
+
+            function showFeedback(text, color) {
+                feedbackEl.textContent = text;
+                feedbackEl.style.color = color;
+                feedbackEl.style.opacity = '1';
+                setTimeout(() => { feedbackEl.style.opacity = '0'; }, 800);
+            }
+
+            function createItem() {
+                const itemData = items[Math.floor(Math.random() * items.length)];
+                const itemDiv = document.createElement('div');
+                itemDiv.textContent = itemData.char;
+                itemDiv.classList.add('absolute', 'cursor-pointer');
+                itemDiv.style.fontSize = '2.5rem';
+                itemDiv.style.userSelect = 'none';
+
+                const fromLeft = Math.random() < 0.5;
+                const startY = Math.random() * 80 + 10;
+                itemDiv.style.top = `${startY}%`;
+                itemDiv.style.left = fromLeft ? '-10%' : '110%';
+
+                gameContainer.appendChild(itemDiv);
+
+                const duration = Math.random() * 5 + 8; // 8-13 seconds
+                itemDiv.animate([
+                    { left: fromLeft ? '-10%' : '110%', transform: `rotate(${Math.random() * 60 - 30}deg)` },
+                    { left: fromLeft ? '110%' : '-10%', transform: `rotate(${Math.random() * 360}deg)` }
+                ], {
+                    duration: duration * 1000,
+                    easing: 'linear'
+                });
+
+                setTimeout(() => { itemDiv.remove(); }, duration * 1000);
+
+                itemDiv.addEventListener('click', () => {
+                    if (itemData.type === 'trash') {
+                        score += itemData.points;
+                        showFeedback('Good job!', 'white');
+                        // Poof animation
+                        itemDiv.animate([ { transform: 'scale(1.5)', opacity: 0 } ], { duration: 300 });
+                        setTimeout(() => itemDiv.remove(), 290);
+                    } else {
+                        showFeedback('Oops! Save the animals!', '#ff6b6b');
+                    }
+                    scoreEl.textContent = score;
+                }, { once: true });
+            }
+
+            activeGameInterval = setInterval(createItem, 1200);
+        }
+
+    </script>
+
+
+<script src="./script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
